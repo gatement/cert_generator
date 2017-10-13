@@ -37,7 +37,7 @@ touch index.txt
 cp ../../openssl.cnf .
 
 ## 1. create self-sign CA
-openssl req -x509 -config openssl.cnf -newkey rsa:2048 -days ${VALIDATE_DAYS} -out cacert.pem -outform PEM -subj /CN="${CA_NAME}"/ -nodes
+openssl req -x509 -sha512 -config openssl.cnf -newkey rsa:2048 -days ${VALIDATE_DAYS} -out cacert.pem -outform PEM -subj /CN="${CA_NAME}"/ -nodes
 
 ## 2. export and convert format
 openssl pkcs12 -export -out cakeycert.p12 -in cacert.pem -inkey private/cakey.pem -passout pass:${PKCS12_PWD}

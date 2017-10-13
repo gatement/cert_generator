@@ -41,14 +41,14 @@ cd "${CERT_DIR}"
 
 ## 1. generate key and csr
 openssl genrsa -out key.pem 2048
-openssl req -new -key key.pem -out req.pem -outform PEM -subj /CN="${CERT_NAME}"/ -nodes
+openssl req -new -sha512 -key key.pem -out req.pem -outform PEM -subj /CN="${CERT_NAME}"/ -nodes
 
 ## 2. sign by CA
 cd "../${CA_NAME}"
 # add subjectAltName for server certifiate
 cp openssl.cnf openssl_tmp.cnf
 echo "DNS.1 = ${CERT_NAME}" >> openssl_tmp.cnf
-openssl ca -config openssl_tmp.cnf -in "../${CERT_NAME}/req.pem" -out "../${CERT_NAME}/cert.pem" -notext -batch -extensions ${EXTENSIONS} 
+openssl ca -md sha512 -config openssl_tmp.cnf -in "../${CERT_NAME}/req.pem" -out "../${CERT_NAME}/cert.pem" -notext -batch -extensions ${EXTENSIONS} 
 rm -rf openssl_tmp.cnf
 
 ## 3. export and convert format

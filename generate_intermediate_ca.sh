@@ -44,11 +44,11 @@ cp ../../openssl.cnf .
 
 ## 1. generate key and csr
 openssl genrsa -out private/cakey.pem 2048
-openssl req -new -key private/cakey.pem -out req.pem -outform PEM -subj /CN="${INTERMEDIATE_CA_NAME}"/ -nodes
+openssl req -new -sha512 -key private/cakey.pem -out req.pem -outform PEM -subj /CN="${INTERMEDIATE_CA_NAME}"/ -nodes
 
 ## 2. sign by CA
 cd "../${CA_NAME}"
-openssl ca -config openssl.cnf -in "../${INTERMEDIATE_CA_NAME}/req.pem" -out "../${INTERMEDIATE_CA_NAME}/cacert.pem" -notext -batch -extensions ca_extensions 
+openssl ca -md sha512 -config openssl.cnf -in "../${INTERMEDIATE_CA_NAME}/req.pem" -out "../${INTERMEDIATE_CA_NAME}/cacert.pem" -notext -batch -extensions ca_extensions 
 
 ## 3. export and convert format
 cd "../${INTERMEDIATE_CA_NAME}"
