@@ -45,7 +45,11 @@ openssl req -new -key key.pem -out req.pem -outform PEM -subj /CN="${CERT_NAME}"
 
 ## 2. sign by CA
 cd "../${CA_NAME}"
-openssl ca -config openssl.cnf -in "../${CERT_NAME}/req.pem" -out "../${CERT_NAME}/cert.pem" -notext -batch -extensions ${EXTENSIONS} 
+# add subjectAltName for server certifiate
+cp openssl.cnf openssl_tmp.cnf
+echo "DNS.1 = ${CERT_NAME}" >> openssl_tmp.cnf
+openssl ca -config openssl_tmp.cnf -in "../${CERT_NAME}/req.pem" -out "../${CERT_NAME}/cert.pem" -notext -batch -extensions ${EXTENSIONS} 
+rm -rf openssl_tmp.cnf
 
 ## 3. export and convert format
 cd "../${CERT_NAME}"
