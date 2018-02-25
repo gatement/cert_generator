@@ -2,22 +2,16 @@
 
 ## input CA_NAME
 read -p 'What is the CA certificate common name? [RootCA]: ' CA_NAME
-if [ "x" == "x${CA_NAME}" ] ; then
-    CA_NAME=RootCA
-fi
+CA_NAME=${CA_NAME:-RootCA}
 
 ## input VALIDATE_YEARS
 read -p 'How many years this and issued certificates will expire? [20]: ' VALIDATE_YEARS
-if [ "x" == "x${VALIDATE_YEARS}" ] ; then
-    VALIDATE_YEARS=20
-fi
+VALIDATE_YEARS=${VALIDATE_YEARS:-20}
 VALIDATE_DAYS=$((VALIDATE_YEARS * 365))
 
 ## input PKCS12_PWD
 read -p 'Please input pkcs12 file password [123456]: ' PKCS12_PWD
-if [ "x" == "x${PKCS12_PWD}" ] ; then
-    PKCS12_PWD=123456
-fi
+PKCS12_PWD=${PKCS12_PWD:-123456}
 
 CERT_DIR=certs/${CA_NAME}
 

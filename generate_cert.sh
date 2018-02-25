@@ -2,31 +2,25 @@
 
 ## input CERT_NAME
 read -p 'What is the certificate common name? [debug.example.com]: ' CERT_NAME
-if [ "x" == "x${CERT_NAME}" ] ; then
-    CERT_NAME=debug.example.com
-fi
+CERT_NAME=${CERT_NAME:-debug.example.com}
 
 ## input CA_NAME
 read -p 'Which CA will sign the certificate? [RootCA]: ' CA_NAME
-if [ "x" == "x${CA_NAME}" ] ; then
-    CA_NAME=RootCA
-fi
+CA_NAME=${CA_NAME:-RootCA}
 
 ## input EXTENSIONS
 read -p 'What is the certificate type? 1(server) or 2(client)? [1]: ' CERT_TYPE
-if [ "x" == "x${CERT_TYPE}" ] ; then
-    EXTENSIONS=server_extensions
 elif [ "1" == "${CERT_TYPE}" ] ; then
     EXTENSIONS=server_extensions
 elif [ "2" == "${CERT_TYPE}" ] ; then
     EXTENSIONS=client_extensions
+else
+    EXTENSIONS=server_extensions
 fi
 
 ## input PKCS12_PWD
 read -p 'Please input pkcs12 file password [123456]: ' PKCS12_PWD
-if [ "x" == "x${PKCS12_PWD}" ] ; then
-    PKCS12_PWD=123456
-fi
+PKCS12_PWD=${PKCS12_PWD:-123456}
 
 CERT_DIR=certs/${CERT_NAME}
 
