@@ -10,9 +10,9 @@ CA_NAME=${CA_NAME:-RootCA}
 
 ## input EXTENSIONS
 read -p 'What is the certificate type? 1(server) or 2(client)? [1]: ' CERT_TYPE
-if [ "1" == "${CERT_TYPE}" ] ; then
+if [ "${CERT_TYPE}" = "1" ] ; then
     EXTENSIONS=server_extensions
-elif [ "2" == "${CERT_TYPE}" ] ; then
+elif [ "${CERT_TYPE}" = "2" ] ; then
     EXTENSIONS=client_extensions
 else
     EXTENSIONS=server_extensions
