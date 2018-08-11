@@ -44,7 +44,12 @@ openssl ca -md sha512 -config openssl.cnf -in "../${INTERMEDIATE_CA_NAME}/req.pe
 
 ## 3. export and convert format
 cd "../${INTERMEDIATE_CA_NAME}"
+
+cp cacert.pem cacerts.pem
+cat ../${CA_NAME}/cacert.pem >> cacerts.pem
+
 openssl pkcs12 -export -out cakeycert.p12 -in cacert.pem -inkey private/cakey.pem -passout pass:${PKCS12_PWD}
+openssl pkcs12 -export -out cakeycerts.p12 -in cacerts.pem -inkey private/cakey.pem -passout pass:${PKCS12_PWD}
 openssl x509 -in cacert.pem -out cacert.cer -outform DER
 
 cd ../..

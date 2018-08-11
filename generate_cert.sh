@@ -47,7 +47,12 @@ rm -rf openssl_tmp.cnf
 
 ## 3. export and convert format
 cd "../${CERT_NAME}"
+
+cp cert.pem certs.pem
+cat ../${CA_NAME}/cacerts.pem >> certs.pem
+
 openssl pkcs12 -export -out keycert.p12 -in cert.pem -inkey key.pem -passout pass:${PKCS12_PWD}
+openssl pkcs12 -export -out keycerts.p12 -in certs.pem -inkey key.pem -passout pass:${PKCS12_PWD}
 openssl x509 -in cert.pem -out cert.cer -outform DER
 
 cd ../..
