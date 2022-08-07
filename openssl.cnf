@@ -56,3 +56,6 @@ subjectAltName = @alt_names
 [ alt_names ]
 #DNS.1 = a.local.com
 #DNS.2 = b.local.com
+
+#[ v3_ca ] # Extensions for a typical CA, update to your server IP
+#subjectAltName = IP:8.135.19.237
