@@ -35,8 +35,9 @@ cd "${CERT_DIR}"
 
 ## 1. generate key and csr
 openssl genrsa -out key.pem 2048
+echo "--- key generated."
 openssl req -new -sha512 -key key.pem -out req.pem -outform PEM -subj /CN="${CERT_NAME}"/ -nodes
-echo "--- key and csr generated."
+echo "--- csr generated."
 
 ## 2. sign by CA
 cd "../${CA_NAME}"

@@ -32,10 +32,15 @@ cp ../../openssl.cnf .
 
 ## 1. create self-sign CA
 openssl req -x509 -sha512 -config openssl.cnf -newkey rsa:2048 -days ${VALIDATE_DAYS} -out cacert.pem -outform PEM -subj /CN="${CA_NAME}"/ -nodes
+echo "--- key and cert generated."
 
 ## 2. export and convert format
 cp cacert.pem cacerts.pem
+
 openssl pkcs12 -export -out cakeycert.p12 -in cacert.pem -inkey private/cakey.pem -passout pass:${PKCS12_PWD}
+echo "--- cakeycert.p12 generated."
+
 openssl x509 -in cacert.pem -out cacert.cer -outform DER
+echo "--- cacert.cer generated."
 
 cd ../..
