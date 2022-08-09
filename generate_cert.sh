@@ -5,7 +5,7 @@ read -p 'What is the certificate common name? [test.example.com]: ' CERT_NAME
 CERT_NAME=${CERT_NAME:-test.example.com}
 
 ## input subject alternative name(SAN)
-read -p 'any subject alternative names? e.g. "DNS:example.com, DNS:*.example.com, IP:1.2.3.4, IP:1.2.3.5" [no need]: ' SAN
+read -p 'any subject alternative names? e.g. "DNS:example.com, DNS:*.example.com, IP:8.135.19.237" [no need]: ' SAN
 SAN=${SAN:-NO_SAN}
 
 ## input CA_NAME
@@ -47,8 +47,9 @@ echo "--- csr generated."
 cd "../${CA_NAME}"
 # add subjectAltName for server certifiate
 cp openssl.cnf openssl_tmp.cnf
+echo -n "subjectAltName = DNS:${CERT_NAME}" >> openssl_tmp.cnf
 if [ ${SAN} ] ; then
-    echo "subjectAltName = ${SAN}" >> openssl_tmp.cnf
+    echo ", ${SAN}" >> openssl_tmp.cnf
 fi
 openssl ca -md sha512 -config openssl_tmp.cnf -in "../${CERT_NAME}/req.pem" -out "../${CERT_NAME}/cert.pem" -notext -batch -extensions ${EXTENSIONS} 
 rm -rf openssl_tmp.cnf
