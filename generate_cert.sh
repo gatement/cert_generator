@@ -1,7 +1,7 @@
 #!/bin/sh
 
 ## input CERT_NAME
-read -p 'What is the certificate common name? [example.com]: ' CERT_NAME
+read -p 'What is the certificate common name? [test.example.com]: ' CERT_NAME
 CERT_NAME=${CERT_NAME:-test.example.com}
 
 ## input subject alternative name(SAN)
